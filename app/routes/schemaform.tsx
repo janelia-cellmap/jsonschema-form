@@ -35,16 +35,18 @@ export default function Index() {
           <Form
             schema={formSchema}
             validator={validator}
+            formData={formOutput}
             onSubmit={({ formData }, e) =>  {e.preventDefault(); setFormOutput(formData)}}
+            onChange={({formData}, id) => { setFormOutput(formData)}}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <h1>Output</h1>
           <Suspense fallback="">
-            <BrowserOnly>
+            <BrowserOnly fallback="">
               {() => {
                 const ReactJson = require("react-json-view").default;
-                return <ReactJson src={formOutput} />;
+                return <ReactJson src={formOutput} liveValidate />;
               }}
             </BrowserOnly>
           </Suspense>
